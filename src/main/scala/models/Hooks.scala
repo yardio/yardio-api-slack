@@ -34,15 +34,6 @@ case class OutgoingWebHook(
 ) {
   lazy val content: String = this.text.getOrElse("")
   lazy val acceptable: Boolean = (this.user_id != "USLACKBOT") && this.text.isDefined
-  lazy val command: Option[Command] = this.trigger_word.flatMap { tword =>
-    if (tword.startsWith("!")) { text map { t =>
-      val words = t.drop(1).trim.split(" ") // Here, we are dropping the starting bang
-      Command(token, team_id, channel_id, channel_name, user_id, user_name, "/" + words.head, words.drop(1).mkString(" "))
-    }}
-    else {
-      None
-    }
-  }
 }
 
 object OutgoingWebHook {
